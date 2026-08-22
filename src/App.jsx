@@ -15,6 +15,7 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsConditions from "./pages/TermsConditions";
+import Benefits from "./pages/Benefits";
 import { CartProvider } from "./context/CartContext";
 import { WishlistProvider } from "./context/WishlistContext";
 import { AuthProvider } from "./context/AuthContext";
@@ -44,6 +45,7 @@ export default function App() {
                   <Route path="/order/:orderId" element={<OrderTracking />} />
                   <Route path="/profile" element={<Profile />} />
                   <Route path="/about" element={<About />} />
+                  <Route path="/benefits" element={<Benefits />} />
                   <Route path="/contact" element={<Contact />} />
                   <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                   <Route path="/terms" element={<TermsConditions />} />

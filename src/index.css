@@ -53,6 +53,32 @@ h1, h2, h3, h4, h5, h6 {
   to   { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes benefitFadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes benefitFloat {
+  0%, 100% { transform: rotate(28deg) translateY(0); }
+  50% { transform: rotate(34deg) translateY(-10px); }
+}
+
+.benefit-fade-up { animation: benefitFadeUp 900ms ease-out both; }
+.benefit-card { animation: benefitFadeUp 700ms ease-out both; }
+.benefit-leaf,
+.benefit-cta-leaf {
+  position: absolute;
+  border: 1px solid rgba(122, 144, 53, 0.22);
+  border-radius: 100% 0 100% 0;
+  pointer-events: none;
+  animation: benefitFloat 7s ease-in-out infinite;
+}
+.benefit-leaf-one { width: 150px; height: 230px; right: 7%; top: 18%; }
+.benefit-leaf-two { width: 80px; height: 130px; left: 8%; bottom: 12%; animation-delay: -2s; }
+.benefit-cta-leaf { border-color: rgba(181, 196, 128, 0.22); }
+.benefit-cta-leaf-one { width: 130px; height: 210px; left: -30px; top: 18%; }
+.benefit-cta-leaf-two { width: 100px; height: 160px; right: 4%; bottom: -30px; animation-delay: -3s; }
+
 /* Star rating fill */
 .star-filled { color: #f59e0b; }
 .star-empty  { color: #d1d5db; }
