@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { ShoppingCart, Heart, Star, AlertTriangle } from "lucide-react";
 import { useCart } from "../../context/CartContext";
@@ -29,6 +30,7 @@ function StarRating({ rating }) {
 }
 
 export default function ProductCard({ product }) {
+  const cardRef = useRef(null);
   const { addToCart, isInCart } = useCart();
   const { toggleWishlist, isWishlisted } = useWishlist();
   const { showToast } = useToast();
@@ -45,11 +47,46 @@ export default function ProductCard({ product }) {
   const outOfStock = stock === 0;
   const displayDesc = shortDescription || description || "";
 
+  function handlePointerMove(event) {
+    if (!cardRef.current || event.pointerType === "touch") return;
+    const bounds = cardRef.current.getBoundingClientRect();
+    const x = (event.clientX - bounds.left) / bounds.width - 0.5;
+    const y = (event.clientY - bounds.top) / bounds.height - 0.5;
+    cardRef.current.style.setProperty("--card-rotate-x", `${y * -4}deg`);
+    cardRef.current.style.setProperty("--card-rotate-y", `${x * 4}deg`);
+  }
+
+  function resetPointer() {
+    cardRef.current?.style.setProperty("--card-rotate-x", "0deg");
+    cardRef.current?.style.setProperty("--card-rotate-y", "0deg");
+  }
+
   function handleAddToCart(e) {
     e.preventDefault();
     if (outOfStock) return;
     addToCart(product);
     showToast(`${name} added to cart`, "cart");
+
+    const image = cardRef.current?.querySelector("img");
+    const cart = document.querySelector('[aria-label^="Cart"]');
+    if (image && cart && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      const start = image.getBoundingClientRect();
+      const end = cart.getBoundingClientRect();
+      const flight = image.cloneNode();
+      flight.className = "cart-flight";
+      flight.style.left = `${start.left + start.width / 2 - 22}px`;
+      flight.style.top = `${start.top + start.height / 2 - 22}px`;
+      document.body.appendChild(flight);
+      flight.animate(
+        [
+          { transform: "translate(0, 0) scale(1)", opacity: 1 },
+          { transform: `translate(${end.left - start.left}px, ${end.top - start.top}px) scale(.25)`, opacity: 0.25 },
+        ],
+        { duration: 650, easing: "cubic-bezier(.22, 1, .36, 1)" }
+      ).finished.finally(() => flight.remove());
+      cart.classList.remove("cart-pulse");
+      requestAnimationFrame(() => cart.classList.add("cart-pulse"));
+    }
   }
 
   function handleWishlist(e) {
@@ -62,7 +99,7 @@ export default function ProductCard({ product }) {
   }
 
   return (
-    <div className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col border border-transparent hover:border-brand-100">
+    <div ref={cardRef} onPointerMove={handlePointerMove} onPointerLeave={resetPointer} className="product-card group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col border border-transparent hover:border-brand-100">
       {/* Image */}
       <div className="relative overflow-hidden bg-brand-50 h-48">
         <Link to={`/product/${slug}`} tabIndex={-1} aria-hidden="true">

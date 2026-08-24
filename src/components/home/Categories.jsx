@@ -7,7 +7,7 @@ const PLACEHOLDER_COLORS = ["#d2dbb2", "#e4d9c8", "#c8d4b2"];
 
 export default function Categories() {
   return (
-    <section className="py-20 lg:py-28 bg-white">
+    <section className="py-20 lg:py-28 bg-white" data-reveal>
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
 
         {/* Heading */}
@@ -29,7 +29,9 @@ export default function Categories() {
             <Link
               key={cat.id}
               to={cat.href}
-              className="group relative overflow-hidden rounded-3xl aspect-[4/5] flex flex-col justify-end shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1"
+              data-reveal
+              style={{ "--reveal-delay": `${i * 100}ms` }}
+              className="group relative overflow-hidden rounded-3xl aspect-[4/5] flex flex-col justify-end shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 category-card"
             >
               {/* Background image */}
               <ProductImage

@@ -7,7 +7,7 @@ export default function FeaturedProducts() {
   const featured = products.filter((p) => p.featured);
 
   return (
-    <section className="py-20 lg:py-28 bg-[#faf8f5]">
+    <section className="py-20 lg:py-28 bg-[#faf8f5]" data-reveal>
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
 
         {/* Heading */}
@@ -28,8 +28,10 @@ export default function FeaturedProducts() {
 
         {/* Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {featured.map((product) => (
-            <ProductCard key={product.id} product={product} />
+          {featured.map((product, index) => (
+            <div key={product.id} data-reveal style={{ "--reveal-delay": `${index * 80}ms` }}>
+              <ProductCard product={product} />
+            </div>
           ))}
         </div>
 

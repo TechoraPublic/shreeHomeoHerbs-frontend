@@ -132,7 +132,7 @@ export default function ProductDetails() {
 
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
         {/* Main product section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 mb-16" data-reveal>
 
           {/* Gallery */}
           <div className="space-y-3">

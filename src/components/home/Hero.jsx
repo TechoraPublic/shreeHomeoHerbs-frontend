@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Leaf } from "lucide-react";
 import ProductImage from "../ui/ProductImage";
@@ -5,8 +6,24 @@ import ProductImage from "../ui/ProductImage";
 const HERO_BANNER = "https://thefarsal.com/cdn/shop/files/Brown_and_Olive_Neutral_Minimalist_Soap_Instagram_Post_2000_x_1000_px.png?v=1763018194&width=2000";
 
 export default function Hero() {
+  const imageRef = useRef(null);
+
+  function handlePointerMove(event) {
+    if (!imageRef.current || event.pointerType === "touch") return;
+    const bounds = event.currentTarget.getBoundingClientRect();
+    const x = (event.clientX - bounds.left) / bounds.width - 0.5;
+    const y = (event.clientY - bounds.top) / bounds.height - 0.5;
+    imageRef.current.style.setProperty("--hero-x", `${x * 12}px`);
+    imageRef.current.style.setProperty("--hero-y", `${y * 12}px`);
+  }
+
+  function resetPointer() {
+    imageRef.current?.style.setProperty("--hero-x", "0px");
+    imageRef.current?.style.setProperty("--hero-y", "0px");
+  }
+
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden bg-[#f5f7f0]">
+    <section className="hero-section relative min-h-screen flex items-center overflow-hidden bg-[#f5f7f0]" onPointerMove={handlePointerMove} onPointerLeave={resetPointer}>
       {/* Decorative background blobs */}
       <div className="absolute top-0 right-0 w-1/2 h-full bg-brand-50 rounded-bl-[80px] lg:rounded-bl-[120px] -z-0" />
       <div className="absolute bottom-10 left-10 w-32 h-32 rounded-full bg-brand-100/60 blur-3xl" />
@@ -69,8 +86,8 @@ export default function Hero() {
           </div>
 
           {/* Image side */}
-          <div className="order-1 lg:order-2 flex justify-center lg:justify-end">
-            <div className="relative">
+          <div className="order-1 lg:order-2 flex justify-center lg:justify-end" data-reveal>
+            <div className="relative hero-image-wrap" ref={imageRef}>
               {/* Decorative ring */}
               <div className="absolute inset-0 rounded-full border-2 border-dashed border-brand-200 scale-110 animate-[spin_30s_linear_infinite]" />
               {/* Image container */}

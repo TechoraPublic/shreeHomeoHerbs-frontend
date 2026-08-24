@@ -40,7 +40,7 @@ export default function Header() {
         }`}
       >
         <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 lg:h-20">
+          <div className={`flex items-center justify-between transition-[height] duration-300 ${scrolled ? "h-16" : "h-16 lg:h-20"}`}>
 
             {/* Logo */}
             <Link to="/" className="flex items-center gap-2.5 group">

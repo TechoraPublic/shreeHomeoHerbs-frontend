@@ -21,6 +21,35 @@ import { WishlistProvider } from "./context/WishlistContext";
 import { AuthProvider } from "./context/AuthContext";
 import { OrderProvider } from "./context/OrderContext";
 import { ToastProvider } from "./components/ui/Toast";
+import usePageMotion from "./hooks/usePageMotion";
+
+function AnimatedRoutes() {
+  usePageMotion();
+
+  return (
+    <div className="page-content">
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/shop" element={<Shop />} />
+        <Route path="/soaps" element={<Shop />} />
+        <Route path="/hair-care" element={<Shop />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/wishlist" element={<Wishlist />} />
+        <Route path="/product/:slug" element={<ProductDetails />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/order/:orderId" element={<OrderTracking />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/benefits" element={<Benefits />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms" element={<TermsConditions />} />
+      </Routes>
+    </div>
+  );
+}
 
 export default function App() {
   return (
@@ -31,25 +60,7 @@ export default function App() {
             <WishlistProvider>
               <ToastProvider>
                 <Header />
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/shop" element={<Shop />} />
-                  <Route path="/soaps" element={<Shop />} />
-                  <Route path="/hair-care" element={<Shop />} />
-                  <Route path="/cart" element={<Cart />} />
-                  <Route path="/wishlist" element={<Wishlist />} />
-                  <Route path="/product/:slug" element={<ProductDetails />} />
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/signup" element={<Signup />} />
-                  <Route path="/checkout" element={<Checkout />} />
-                  <Route path="/order/:orderId" element={<OrderTracking />} />
-                  <Route path="/profile" element={<Profile />} />
-                  <Route path="/about" element={<About />} />
-                  <Route path="/benefits" element={<Benefits />} />
-                  <Route path="/contact" element={<Contact />} />
-                  <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-                  <Route path="/terms" element={<TermsConditions />} />
-                </Routes>
+                <AnimatedRoutes />
                 <Footer />
               </ToastProvider>
             </WishlistProvider>

@@ -3,7 +3,7 @@ import { Leaf, Share2, Globe, MessageCircle, Mail, Phone, MapPin } from "lucide-
 
 export default function Footer() {
   return (
-    <footer className="bg-brand-900 text-brand-100">
+    <footer className="bg-brand-900 text-brand-100" data-reveal>
       {/* Main footer */}
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
