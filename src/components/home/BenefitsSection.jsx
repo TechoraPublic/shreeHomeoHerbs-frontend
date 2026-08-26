@@ -34,7 +34,7 @@ const benefits = [
     description: "Simple, effective products designed to make your daily self-care routine more enjoyable.",
   },
   {
-    icon: Sparkles,
+    icon: Sparkle,
     title: "Thoughtfully Crafted",
     description: "Every product is created with attention to ingredients, quality, and the little details that matter.",
   },
