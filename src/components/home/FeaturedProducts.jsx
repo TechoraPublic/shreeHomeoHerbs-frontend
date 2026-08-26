@@ -4,7 +4,7 @@ import { products } from "../../data/products";
 import ProductCard from "../products/ProductCard";
 
 export default function FeaturedProducts() {
-  const featured = products.filter((p) => p.featured);
+  const featured = products.filter((p) => p.featured).slice(0, 4);
 
   return (
     <section className="py-20 lg:py-28 bg-[#faf8f5]" data-reveal>

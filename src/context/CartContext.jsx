@@ -19,7 +19,7 @@ function cartReducer(state, action) {
       if (exists) {
         return state.map((i) =>
           i.id === action.product.id
-            ? { ...i, quantity: Math.min(i.quantity + (action.qty || 1), i.stock) }
+            ? { ...i, quantity: i.quantity + (action.qty || 1) }
             : i
         );
       }
@@ -29,7 +29,7 @@ function cartReducer(state, action) {
       return state.filter((i) => i.id !== action.id);
     case "INCREASE":
       return state.map((i) =>
-        i.id === action.id ? { ...i, quantity: Math.min(i.quantity + 1, i.stock) } : i
+        i.id === action.id ? { ...i, quantity: i.quantity + 1 } : i
       );
     case "DECREASE":
       return state.map((i) =>
@@ -38,7 +38,7 @@ function cartReducer(state, action) {
     case "UPDATE_QTY":
       return state.map((i) =>
         i.id === action.id
-          ? { ...i, quantity: Math.min(Math.max(action.qty, 1), i.stock) }
+          ? { ...i, quantity: Math.max(action.qty, 1) }
           : i
       );
     case "CLEAR":

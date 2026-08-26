@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { ShoppingCart, Menu, Leaf, Heart, User } from "lucide-react";
+import { ShoppingCart, Menu, Heart, User } from "lucide-react";
 import MobileMenu from "./MobileMenu";
 import { useCart } from "../../context/CartContext";
 import { useWishlist } from "../../context/WishlistContext";
@@ -44,17 +44,7 @@ export default function Header() {
 
             {/* Logo */}
             <Link to="/" className="flex items-center gap-2.5 group">
-              <div className="w-9 h-9 rounded-full bg-brand-600 flex items-center justify-center shadow-sm group-hover:bg-brand-700 transition-colors">
-                <Leaf size={18} className="text-white" />
-              </div>
-              <div className="leading-tight">
-                <span className="block font-heading text-lg font-bold text-brand-800 tracking-tight">
-                  HerboNature
-                </span>
-                <span className="block text-[10px] font-medium text-brand-500 tracking-widest uppercase -mt-0.5">
-                  Natural &amp; Herbal
-                </span>
-              </div>
+              <img src="/logo.png" alt="HerboNature" className="h-16 w-auto object-contain rounded-md" />
             </Link>
 
             {/* Desktop Nav */}
@@ -77,6 +67,7 @@ export default function Header() {
             {/* Right actions */}
             <div className="flex items-center gap-1">
               {/* Wishlist */}
+              {/*
               <Link
                 to="/wishlist"
                 aria-label={`Wishlist (${wishlistCount} items)`}
@@ -89,8 +80,10 @@ export default function Header() {
                   </span>
                 )}
               </Link>
+              */}
 
               {/* Profile */}
+              {/*
               <Link
                 to="/profile"
                 aria-label="My Account"
@@ -101,6 +94,7 @@ export default function Header() {
                 <User size={20} />
                 {isLoggedIn && <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-brand-500 rounded-full" />}
               </Link>
+              */}
 
               {/* Cart */}
               <Link

@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const LAST_UPDATED = "January 1, 2025";
 
 const SECTIONS = [
@@ -65,7 +67,7 @@ Our total liability to you for any claim arising from these terms shall not exce
   },
   {
     title: "10. Governing Law",
-    content: `These Terms and Conditions are governed by and construed in accordance with the laws of India. Any disputes arising from these terms shall be subject to the exclusive jurisdiction of the courts in [Your City], India.`,
+    content: `These Terms and Conditions are governed by and construed in accordance with the laws of India. Any disputes arising from these terms shall be subject to the exclusive jurisdiction of the courts in Surat, Gujarat, India.`,
   },
   {
     title: "11. Changes to Terms",
@@ -75,9 +77,9 @@ Our total liability to you for any claim arising from these terms shall not exce
     title: "12. Contact Us",
     content: `For any questions regarding these Terms and Conditions, please contact us at:
 
-Email: hello@herbonature.com
-Phone: +91 00000 00000
-Address: Your Address, City, State — PIN`,
+Email: shreehomoeoherbes99@gmail.com
+Phone: +91 90167 18563
+Address: Surat, Gujarat 394101`,
   },
 ];
 
@@ -98,9 +100,9 @@ export default function TermsConditions() {
       </section>
 
       <div className="mx-auto w-full max-w-3xl px-4 sm:px-6 lg:px-8 py-12">
-        <div className="space-y-8">
+        <div className="bg-white rounded-2xl border border-brand-50 shadow-sm p-6 sm:p-10 divide-y divide-brand-50">
           {SECTIONS.map(({ title, content }) => (
-            <div key={title} className="bg-white rounded-2xl border border-brand-50 shadow-sm p-6 sm:p-8">
+            <div key={title} className="py-6 first:pt-0 last:pb-0">
               <h2 className="font-heading text-lg font-bold text-gray-900 mb-4">{title}</h2>
               <div className="text-sm text-gray-600 leading-relaxed whitespace-pre-line">{content}</div>
             </div>
@@ -110,9 +112,9 @@ export default function TermsConditions() {
         <div className="mt-10 bg-brand-50 border border-brand-100 rounded-2xl p-6 text-center">
           <p className="text-sm text-gray-600">
             Questions about our terms?{" "}
-            <a href="mailto:hello@herbonature.com" className="text-brand-600 font-semibold hover:text-brand-800 transition-colors">
+            <Link to="/contact" className="text-brand-600 font-semibold hover:text-brand-800 transition-colors">
               Contact us
-            </a>
+            </Link>
           </p>
         </div>
       </div>

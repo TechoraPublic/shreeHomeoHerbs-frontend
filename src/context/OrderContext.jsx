@@ -35,12 +35,13 @@ function getTrackingStep(placedAt) {
 export function OrderProvider({ children }) {
   const [orders, setOrders] = useState(() => syncOrderImages(loadFromStorage(ORDERS_KEY, [])));
 
-  const placeOrder = useCallback(({ items, address, paymentMethod, total, savings }) => {
+  const placeOrder = useCallback(({ items, address, paymentMethod, paymentId, total, savings }) => {
     const order = {
       id: generateOrderId(),
       items,
       address,
       paymentMethod,
+      paymentId,
       total,
       savings,
       status: "Order Placed",

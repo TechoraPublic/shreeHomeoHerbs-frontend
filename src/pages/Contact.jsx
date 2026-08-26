@@ -1,14 +1,13 @@
 import { useState } from "react";
 import { Mail, Phone, MapPin, Clock, Send, MessageCircle, AlertCircle, CheckCircle } from "lucide-react";
+import { API_BASE_URL } from "../utils/api";
 
 const CONTACT_INFO = [
-  { icon: Phone, label: "Phone", value: "+91 00000 00000", href: "tel:+910000000000" },
-  { icon: Mail, label: "Email", value: "hello@herbonature.com", href: "mailto:hello@herbonature.com" },
-  { icon: MapPin, label: "Address", value: "Your Address, City, State — PIN", href: null },
-  { icon: Clock, label: "Business Hours", value: "Mon–Sat, 9 AM – 6 PM IST", href: null },
+  { icon: Phone, label: "Phone", value: "+91 90167 18563", href: "tel:+919016718563" },
+  { icon: Mail, label: "Email", value: "shreehomoeoherbes99@gmail.com", href: "mailto:shreehomoeoherbes99@gmail.com" },
+  // { icon: MapPin, label: "Address", value: "Your Address, City, State — PIN", href: null },
+  // { icon: Clock, label: "Business Hours", value: "Mon–Sat, 9 AM – 6 PM IST", href: null },
 ];
-
-const SUBJECTS = ["Product Inquiry", "Order Issue", "Return / Refund", "Wholesale", "Other"];
 
 function Field({ label, id, type = "text", value, onChange, error, placeholder, required, as: As = "input", rows }) {
   const cls = `w-full px-4 py-3 border rounded-xl text-sm text-gray-800 placeholder-gray-400 bg-white transition-all focus:outline-none focus:ring-2 ${
@@ -30,10 +29,11 @@ function Field({ label, id, type = "text", value, onChange, error, placeholder, 
 }
 
 export default function Contact() {
-  const [form, setForm] = useState({ name: "", email: "", phone: "", subject: "", message: "" });
+  const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
   function set(field) {
     return (e) => {
@@ -48,7 +48,6 @@ export default function Contact() {
     if (!form.email.trim()) e.email = "Email is required.";
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = "Enter a valid email.";
     if (form.phone && !/^[6-9]\d{9}$/.test(form.phone.replace(/\s/g, ""))) e.phone = "Enter a valid 10-digit mobile number.";
-    if (!form.subject) e.subject = "Please select a subject.";
     if (!form.message.trim()) e.message = "Message is required.";
     else if (form.message.trim().length < 10) e.message = "Message must be at least 10 characters.";
     return e;
@@ -58,10 +57,25 @@ export default function Contact() {
     e.preventDefault();
     const errs = validate();
     if (Object.keys(errs).length) { setErrors(errs); return; }
+
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 600));
-    setLoading(false);
-    setSubmitted(true);
+    setSubmitError("");
+    try {
+      const res = await fetch(`${API_BASE_URL}/contact`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.message || "Failed to send message.");
+      }
+      setSubmitted(true);
+    } catch (error) {
+      setSubmitError(error.message || "Failed to send message. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -116,7 +130,7 @@ export default function Contact() {
                 <h2 className="font-heading text-2xl font-bold text-gray-900 mb-2">Message Sent!</h2>
                 <p className="text-gray-500 mb-6">Thank you for reaching out. We'll get back to you within 24 hours.</p>
                 <button
-                  onClick={() => { setSubmitted(false); setForm({ name: "", email: "", phone: "", subject: "", message: "" }); }}
+                  onClick={() => { setSubmitted(false); setForm({ name: "", email: "", phone: "", message: "" }); }}
                   className="bg-brand-600 hover:bg-brand-700 text-white font-semibold px-6 py-3 rounded-full transition-colors"
                 >
                   Send Another Message
@@ -131,24 +145,13 @@ export default function Contact() {
                     <Field label="Email Address" id="email" type="email" value={form.email} onChange={set("email")} placeholder="you@example.com" error={errors.email} required />
                   </div>
                   <Field label="Mobile Number" id="phone" type="tel" value={form.phone} onChange={set("phone")} placeholder="10-digit mobile (optional)" error={errors.phone} />
-                  <div>
-                    <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1.5">
-                      Subject<span className="text-red-400 ml-0.5">*</span>
-                    </label>
-                    <select
-                      id="subject"
-                      value={form.subject}
-                      onChange={set("subject")}
-                      className={`w-full px-4 py-3 border rounded-xl text-sm text-gray-800 bg-white focus:outline-none focus:ring-2 transition-all ${
-                        errors.subject ? "border-red-400 focus:ring-red-100" : "border-gray-200 focus:border-brand-400 focus:ring-brand-100"
-                      }`}
-                    >
-                      <option value="">Select a subject</option>
-                      {SUBJECTS.map((s) => <option key={s} value={s}>{s}</option>)}
-                    </select>
-                    {errors.subject && <p className="mt-1.5 text-xs text-red-500 flex items-center gap-1"><AlertCircle size={11} />{errors.subject}</p>}
-                  </div>
                   <Field label="Message" id="message" as="textarea" rows={5} value={form.message} onChange={set("message")} placeholder="Tell us how we can help you..." error={errors.message} required />
+                  {submitError && (
+                    <p className="text-sm text-red-500 flex items-center gap-1.5 bg-red-50 border border-red-100 rounded-xl px-4 py-3">
+                      <AlertCircle size={14} className="shrink-0" />
+                      {submitError}
+                    </p>
+                  )}
                   <button
                     type="submit"
                     disabled={loading}

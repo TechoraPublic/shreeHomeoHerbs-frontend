@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const LAST_UPDATED = "January 1, 2025";
 
 const SECTIONS = [
@@ -50,7 +52,7 @@ We also automatically collect certain information when you use our website, incl
 • Opt out of marketing communications at any time
 • Lodge a complaint with a supervisory authority
 
-To exercise any of these rights, please contact us at hello@herbonature.com.`,
+To exercise any of these rights, please contact us at shreehomoeoherbes99@gmail.com.`,
   },
   {
     title: "7. Data Retention",
@@ -68,9 +70,9 @@ To exercise any of these rights, please contact us at hello@herbonature.com.`,
     title: "10. Contact Us",
     content: `If you have any questions about this Privacy Policy or our data practices, please contact us at:
 
-Email: hello@herbonature.com
-Phone: +91 00000 00000
-Address: Your Address, City, State — PIN`,
+Email: shreehomoeoherbes99@gmail.com
+Phone: +91 90167 18563
+Address: Surat, Gujarat 394101`,
   },
 ];
 
@@ -91,9 +93,9 @@ export default function PrivacyPolicy() {
       </section>
 
       <div className="mx-auto w-full max-w-3xl px-4 sm:px-6 lg:px-8 py-12">
-        <div className="space-y-8">
+        <div className="bg-white rounded-2xl border border-brand-50 shadow-sm p-6 sm:p-10 divide-y divide-brand-50">
           {SECTIONS.map(({ title, content }) => (
-            <div key={title} className="bg-white rounded-2xl border border-brand-50 shadow-sm p-6 sm:p-8">
+            <div key={title} className="py-6 first:pt-0 last:pb-0">
               <h2 className="font-heading text-lg font-bold text-gray-900 mb-4">{title}</h2>
               <div className="text-sm text-gray-600 leading-relaxed whitespace-pre-line">{content}</div>
             </div>
@@ -103,9 +105,9 @@ export default function PrivacyPolicy() {
         <div className="mt-10 bg-brand-50 border border-brand-100 rounded-2xl p-6 text-center">
           <p className="text-sm text-gray-600">
             Questions about our privacy practices?{" "}
-            <a href="mailto:hello@herbonature.com" className="text-brand-600 font-semibold hover:text-brand-800 transition-colors">
+            <Link to="/contact" className="text-brand-600 font-semibold hover:text-brand-800 transition-colors">
               Contact us
-            </a>
+            </Link>
           </p>
         </div>
       </div>

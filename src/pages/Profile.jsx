@@ -14,7 +14,6 @@ import {
   CheckCircle,
   ChevronRight,
   Package,
-  Truck,
   X,
 } from "lucide-react";
 
@@ -613,14 +612,6 @@ function OrdersTab({ orders, TRACKING_STEPS, getTrackingStep }) {
                   })}
                 </p>
               </div>
-
-              <Link
-                to={`/order/${selected.id}`}
-                className="flex items-center gap-1.5 text-sm text-brand-600 font-semibold border border-brand-200 px-4 py-2 rounded-full"
-              >
-                <Truck size={14} />
-                Track Order
-              </Link>
             </div>
           </div>
 

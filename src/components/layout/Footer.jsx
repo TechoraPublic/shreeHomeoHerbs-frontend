@@ -1,5 +1,15 @@
 import { Link } from "react-router-dom";
-import { Leaf, Share2, Globe, MessageCircle, Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin } from "lucide-react";
+
+function InstagramIcon({ size = 16, ...props }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+    </svg>
+  );
+}
 
 export default function Footer() {
   return (
@@ -11,29 +21,20 @@ export default function Footer() {
           {/* Brand */}
           <div className="lg:col-span-1">
             <Link to="/" className="flex items-center gap-2.5 mb-4">
-              <div className="w-9 h-9 rounded-full bg-brand-500 flex items-center justify-center">
-                <Leaf size={18} className="text-white" />
-              </div>
-              <div className="leading-tight">
-                <span className="block font-heading text-lg font-bold text-white">HerboNature</span>
-                <span className="block text-[10px] tracking-widest uppercase text-brand-300 -mt-0.5">Natural &amp; Herbal</span>
-              </div>
+              <img src="/logo.png" alt="HerboNature" className="w-48 h-auto object-contain rounded-md" />
             </Link>
             <p className="text-sm text-brand-300 leading-relaxed mb-5">
               Crafting pure herbal and natural products inspired by traditional wisdom for your everyday self-care.
             </p>
-            <div className="flex gap-3">
-              {/* TODO: Replace # with actual social URLs */}
-              <a href="#" aria-label="Instagram" className="w-9 h-9 rounded-full bg-brand-700 hover:bg-brand-500 flex items-center justify-center transition-colors duration-200">
-                <MessageCircle size={16} />
-              </a>
-              <a href="#" aria-label="Facebook" className="w-9 h-9 rounded-full bg-brand-700 hover:bg-brand-500 flex items-center justify-center transition-colors duration-200">
-                <Globe size={16} />
-              </a>
-              <a href="#" aria-label="Share" className="w-9 h-9 rounded-full bg-brand-700 hover:bg-brand-500 flex items-center justify-center transition-colors duration-200">
-                <Share2 size={16} />
-              </a>
-            </div>
+            <a
+              href="https://www.instagram.com/shree_homoeo.herbes_84?igsi=MTF6bmdjaXo1OXI4MA=="
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              className="w-9 h-9 rounded-full bg-brand-700 hover:bg-brand-500 flex items-center justify-center transition-colors duration-200"
+            >
+              <InstagramIcon size={16} />
+            </a>
           </div>
 
           {/* Quick Links */}
@@ -80,18 +81,15 @@ export default function Footer() {
             <ul className="space-y-4">
               <li className="flex items-start gap-3 text-sm text-brand-300">
                 <MapPin size={15} className="mt-0.5 shrink-0 text-brand-400" />
-                {/* TODO: Replace with actual address */}
-                <span>Your Address, City, State — PIN</span>
+                <span>Surat, Gujarat 394101</span>
               </li>
               <li className="flex items-center gap-3 text-sm text-brand-300">
                 <Phone size={15} className="shrink-0 text-brand-400" />
-                {/* TODO: Replace with actual phone */}
-                <a href="tel:+910000000000" className="hover:text-white transition-colors">+91 00000 00000</a>
+                <a href="tel:+919016718563" className="hover:text-white transition-colors">+91 90167 18563</a>
               </li>
               <li className="flex items-center gap-3 text-sm text-brand-300">
                 <Mail size={15} className="shrink-0 text-brand-400" />
-                {/* TODO: Replace with actual email */}
-                <a href="mailto:hello@herbonature.com" className="hover:text-white transition-colors">hello@herbonature.com</a>
+                <a href="mailto:shreehomoeoherbes99@gmail.com" className="hover:text-white transition-colors">shreehomoeoherbes99@gmail.com</a>
               </li>
             </ul>
           </div>

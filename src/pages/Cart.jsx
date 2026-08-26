@@ -1,17 +1,21 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Minus, Plus, Trash2, ShoppingBag, ArrowRight, Tag } from "lucide-react";
 import { useCart } from "../context/CartContext";
 import { useToast } from "../components/ui/Toast";
 import { formatPrice } from "../utils/currency";
 import ProductImage from "../components/ui/ProductImage";
+import ConfirmModal from "../components/ui/ConfirmModal";
 
 export default function Cart() {
   const { cartItems, cartTotal, cartSavings, removeFromCart, increaseQuantity, decreaseQuantity, clearCart } = useCart();
   const { showToast } = useToast();
+  const [itemToDelete, setItemToDelete] = useState(null);
 
   function handleRemove(item) {
     removeFromCart(item.id);
     showToast(`${item.name} removed from cart`);
+    setItemToDelete(null);
   }
 
   if (cartItems.length === 0) {
@@ -82,7 +86,7 @@ export default function Cart() {
                       )}
                     </div>
                     <button
-                      onClick={() => handleRemove(item)}
+                      onClick={() => setItemToDelete(item)}
                       aria-label={`Remove ${item.name} from cart`}
                       className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors shrink-0"
                     >
@@ -104,7 +108,6 @@ export default function Cart() {
                       <span className="w-8 text-center text-sm font-semibold text-gray-800">{item.quantity}</span>
                       <button
                         onClick={() => increaseQuantity(item.id)}
-                        disabled={item.quantity >= item.stock}
                         aria-label="Increase quantity"
                         className="w-8 h-8 flex items-center justify-center text-gray-600 hover:bg-brand-50 disabled:opacity-40 transition-colors"
                       >
@@ -193,6 +196,15 @@ export default function Cart() {
 
         </div>
       </div>
+
+      <ConfirmModal
+        isOpen={!!itemToDelete}
+        title="Remove item?"
+        message={itemToDelete ? `Are you sure you want to remove "${itemToDelete.name}" from your cart?` : ""}
+        confirmLabel="Remove"
+        onConfirm={() => handleRemove(itemToDelete)}
+        onCancel={() => setItemToDelete(null)}
+      />
     </main>
   );
 }

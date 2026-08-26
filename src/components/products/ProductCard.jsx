@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ShoppingCart, Heart, Star, AlertTriangle } from "lucide-react";
 import { useCart } from "../../context/CartContext";
 import { useWishlist } from "../../context/WishlistContext";
@@ -31,6 +31,7 @@ function StarRating({ rating }) {
 
 export default function ProductCard({ product }) {
   const cardRef = useRef(null);
+  const navigate = useNavigate();
   const { addToCart, isInCart } = useCart();
   const { toggleWishlist, isWishlisted } = useWishlist();
   const { showToast } = useToast();
@@ -89,6 +90,13 @@ export default function ProductCard({ product }) {
     }
   }
 
+  function handleBuyNow(e) {
+    e.preventDefault();
+    if (outOfStock) return;
+    addToCart(product);
+    navigate("/checkout");
+  }
+
   function handleWishlist(e) {
     e.preventDefault();
     toggleWishlist(product);
@@ -114,13 +122,16 @@ export default function ProductCard({ product }) {
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/8 transition-all duration-300 pointer-events-none" />
 
         {/* Badge */}
+        {/*
         {badge && (
           <span className={`absolute top-3 left-3 text-[10px] font-bold px-2.5 py-1 rounded-full tracking-wide uppercase ${BADGE_STYLES[badge.color]}`}>
             {badge.label}
           </span>
         )}
+        */}
 
         {/* Wishlist button */}
+        {/*
         <button
           onClick={handleWishlist}
           aria-label={wishlisted ? `Remove ${name} from wishlist` : `Add ${name} to wishlist`}
@@ -132,6 +143,7 @@ export default function ProductCard({ product }) {
         >
           <Heart size={14} className={wishlisted ? "fill-white" : ""} />
         </button>
+        */}
 
        
       </div>
@@ -179,31 +191,56 @@ export default function ProductCard({ product }) {
         </div>
 
         {/* Stock warning */}
+        {/*
         {stockStatus.type === "critical" && (
           <div className="flex items-center gap-1 text-orange-600 text-xs font-medium mb-3">
             <AlertTriangle size={12} />
             <span>{stockStatus.label}</span>
           </div>
         )}
+        */}
         {stockStatus.type === "out" && (
           <div className="text-red-500 text-xs font-semibold mb-3">Out of Stock</div>
         )}
 
-        {/* Add to Cart */}
+        {/* Buy Now */}
+        {/*
         <button
-          onClick={handleAddToCart}
+          onClick={handleBuyNow}
           disabled={outOfStock}
-          className={`w-full flex items-center justify-center gap-2 text-sm font-semibold py-2.5 rounded-full transition-all duration-200 mt-auto ${
+          className={`flex-1 flex items-center justify-center gap-2 text-sm font-semibold py-2.5 rounded-full transition-all duration-200 ${
             outOfStock
               ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-              : isInCart(id)
-              ? "bg-brand-100 text-brand-700 hover:bg-brand-600 hover:text-white"
-              : "bg-brand-600 text-white hover:bg-brand-700 hover:shadow-md"
+              : "bg-brand-600 text-white hover:bg-brand-700 hover:shadow-md cursor-pointer"
           }`}
         >
-          <ShoppingCart size={14} />
-          {outOfStock ? "Out of Stock" : isInCart(id) ? "Added to Cart" : "Add to Cart"}
+          {outOfStock ? "Out of Stock" : "Buy Now"}
         </button>
+        */}
+
+        {/* Add to Cart + View Product */}
+        <div className="flex items-center gap-2 mt-auto">
+          <button
+            onClick={handleAddToCart}
+            disabled={outOfStock}
+            className={`flex-1 min-w-0 flex items-center justify-center gap-1.5 px-3 text-sm font-semibold py-2.5 rounded-full transition-all duration-200 ${
+              outOfStock
+                ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                : isInCart(id)
+                ? "bg-brand-100 text-brand-700 hover:bg-brand-600 hover:text-white cursor-pointer"
+                : "bg-brand-600 text-white hover:bg-brand-700 hover:shadow-md cursor-pointer"
+            }`}
+          >
+            <ShoppingCart size={14} className="shrink-0" />
+            <span className="truncate">{outOfStock ? "Out of Stock" : isInCart(id) ? "Added to Cart" : "Add to Cart"}</span>
+          </button>
+          <Link
+            to={`/product/${slug}`}
+            className="flex-1 min-w-0 flex items-center justify-center gap-2 px-3 text-sm font-semibold py-2.5 rounded-full border border-brand-200 text-brand-700 hover:bg-brand-50 transition-all duration-200"
+          >
+            <span className="truncate">View Product</span>
+          </Link>
+        </div>
       </div>
     </div>
   );

@@ -9,9 +9,9 @@ const VALUES = [
 ];
 
 const TEAM = [
-  { name: "Priya Sharma", role: "Founder & Herbalist", initials: "PS" },
-  { name: "Rahul Mehta", role: "Product Formulator", initials: "RM" },
-  { name: "Anita Patel", role: "Quality Assurance", initials: "AP" },
+  { name: "Dr. Sneha Navadiya (B.H.M.S)", role: "Founder and Manager", initials: "SN" },
+  { name: "Deep Navadiya (B.Sc Bio Tech, MBA)", role: "Co-Founder", initials: "DN" },
+  { name: "Kartika Patel (M.Sc Bio Tech)", role: "Quality Reviewer", initials: "KP" },
 ];
 
 const STATS = [

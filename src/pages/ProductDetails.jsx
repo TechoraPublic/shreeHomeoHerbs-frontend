@@ -41,7 +41,7 @@ function RatingBar({ star, count, total }) {
   );
 }
 
-const TABS = ["Description", "Benefits", "Ingredients", "Specifications", "Reviews"];
+const TABS = ["Description", "Benefits" /*, "Ingredients", "Specifications", "Reviews" */];
 
 export default function ProductDetails() {
   const { slug } = useParams();
@@ -93,7 +93,7 @@ export default function ProductDetails() {
   function handleBuyNow() {
     if (outOfStock) return;
     addToCart(product, qty);
-    navigate("/cart");
+    navigate("/checkout");
   }
 
   function handleWishlist() {
@@ -142,11 +142,13 @@ export default function ProductDetails() {
                 alt={name}
                 className="w-full h-full object-cover"
               />
+              {/*
               {offer?.enabled && (
                 <span className="absolute top-4 left-4 bg-red-500 text-white text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wide">
                   {offer.label}
                 </span>
               )}
+              */}
             </div>
             {images.length > 1 && (
               <div className="flex gap-2">
@@ -208,12 +210,14 @@ export default function ProductDetails() {
             </div>
 
             {/* Offer */}
+            {/*
             {offer?.enabled && (
               <div className="flex items-center gap-2 bg-red-50 border border-red-100 text-red-700 text-sm font-medium px-4 py-2.5 rounded-xl mb-4">
                 <Zap size={14} className="shrink-0" />
                 {offer.label}
               </div>
             )}
+            */}
 
             {/* Stock */}
             <div className="mb-5">
@@ -223,12 +227,14 @@ export default function ProductDetails() {
                   In Stock
                 </div>
               )}
+              {/*
               {(stockStatus.type === "low" || stockStatus.type === "critical") && (
                 <div className="flex items-center gap-2 text-orange-600 text-sm font-medium">
                   <AlertTriangle size={15} />
                   {stockStatus.label} in stock
                 </div>
               )}
+              */}
               {stockStatus.type === "out" && (
                 <div className="flex items-center gap-2 text-red-600 text-sm font-semibold">
                   <Package size={15} />
@@ -252,8 +258,7 @@ export default function ProductDetails() {
                   </button>
                   <span className="w-10 text-center text-sm font-semibold text-gray-800">{qty}</span>
                   <button
-                    onClick={() => setQty((q) => Math.min(stock, q + 1))}
-                    disabled={qty >= stock}
+                    onClick={() => setQty((q) => q + 1)}
                     className="w-10 h-10 flex items-center justify-center text-gray-600 hover:bg-brand-50 disabled:opacity-40 transition-colors"
                     aria-label="Increase quantity"
                   >
@@ -277,6 +282,7 @@ export default function ProductDetails() {
                 <ShoppingCart size={18} />
                 {outOfStock ? "Out of Stock" : "Add to Cart"}
               </button>
+              {/*
               <button
                 onClick={handleBuyNow}
                 disabled={outOfStock}
@@ -288,9 +294,11 @@ export default function ProductDetails() {
               >
                 Buy Now
               </button>
+              */}
             </div>
 
             {/* Wishlist */}
+            {/*
             <button
               onClick={handleWishlist}
               className={`flex items-center gap-2 text-sm font-medium transition-colors duration-200 ${
@@ -300,6 +308,7 @@ export default function ProductDetails() {
               <Heart size={16} className={wishlisted ? "fill-rose-500" : ""} />
               {wishlisted ? "Remove from Wishlist" : "Add to Wishlist"}
             </button>
+            */}
 
             {/* Trust badges */}
             <div className="mt-6 pt-6 border-t border-brand-50 grid grid-cols-3 gap-3">
@@ -363,6 +372,7 @@ export default function ProductDetails() {
               </ul>
             )}
 
+            {/*
             {activeTab === "Ingredients" && (
               <div className="flex flex-wrap gap-2">
                 {ingredients.map((ing, i) => (
@@ -390,7 +400,6 @@ export default function ProductDetails() {
 
             {activeTab === "Reviews" && (
               <div className="space-y-8">
-                {/* Summary */}
                 <div className="flex flex-col sm:flex-row gap-8 pb-8 border-b border-brand-50">
                   <div className="text-center">
                     <div className="font-heading text-6xl font-bold text-brand-700 mb-1">{rating}</div>
@@ -404,7 +413,6 @@ export default function ProductDetails() {
                   </div>
                 </div>
 
-                {/* Review list — DEMO DATA */}
                 <p className="text-xs text-gray-400 italic">* Reviews shown are demo content for display purposes.</p>
                 <div className="space-y-5">
                   {reviews.map((review) => (
@@ -425,6 +433,7 @@ export default function ProductDetails() {
                 </div>
               </div>
             )}
+            */}
           </div>
         </div>
 

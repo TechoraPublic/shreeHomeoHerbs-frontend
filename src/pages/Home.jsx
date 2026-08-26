@@ -11,7 +11,7 @@ export default function Home() {
     <main>
       <Hero />
       <FeaturedProducts />
-      <Categories />
+      {/* <Categories /> */}
       <BenefitsSection />
       <AboutPreview />
       <PromoBanner />
