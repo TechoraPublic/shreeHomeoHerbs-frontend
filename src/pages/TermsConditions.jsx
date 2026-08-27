@@ -31,7 +31,7 @@ You will receive an order confirmation via email or on-screen notification after
     title: "5. Shipping & Delivery",
     content: `We aim to dispatch orders within 1–2 business days. Estimated delivery time is 3–7 business days depending on your location. Delivery timelines are estimates and not guaranteed.
 
-Free shipping is available on orders above ₹299. A shipping fee of ₹49 applies to orders below this amount.
+Delivery charges depend on your location and order size: ₹60 for delivery within Gujarat, and for delivery outside Gujarat, ₹110 for orders of 5 items or fewer and ₹90 for orders of more than 5 items.
 
 We are not responsible for delays caused by courier partners, natural disasters, or other circumstances beyond our control.`,
   },

@@ -162,7 +162,7 @@ export default function Cart() {
                 )}
                 <div className="flex justify-between text-sm text-gray-600">
                   <span>Shipping</span>
-                  <span className="text-emerald-600 font-medium">Free</span>
+                  <span className="text-gray-500">Calculated at checkout</span>
                 </div>
               </div>
 

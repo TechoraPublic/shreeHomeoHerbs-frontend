@@ -67,6 +67,12 @@ function SelectField({ label, id, value, onChange, error, options, placeholder, 
 
 const EMPTY_ADDR = { fullName: "", email: "", phone: "", addressLine1: "", addressLine2: "", city: "", state: "", pincode: "" };
 
+function calculateShipping(state, itemCount) {
+  if (!state) return null;
+  if (state.trim().toLowerCase() === "gujarat") return 60;
+  return itemCount > 5 ? 90 : 110;
+}
+
 export default function Checkout() {
   const navigate = useNavigate();
   const { cartItems, cartTotal, cartSavings, clearCart } = useCart();
@@ -198,9 +204,11 @@ export default function Checkout() {
     }
   }
 
-  const shippingFree = cartTotal >= 299;
-  const grandTotal = cartTotal + (shippingFree ? 0 : 49);
   const selectedAddress = savedAddresses.find((a) => a.id === selectedSaved) || newlySavedAddress;
+  const currentState = selectedSaved !== "new" ? selectedAddress?.state : addr.state;
+  const itemCount = cartItems.reduce((s, i) => s + i.quantity, 0);
+  const shippingCost = calculateShipping(currentState, itemCount);
+  const grandTotal = cartTotal + (shippingCost || 0);
 
   if (completedOrder) {
     return (
@@ -303,6 +311,20 @@ export default function Checkout() {
                     </div>
                   )}
 
+                  {currentState && currentState.trim().toLowerCase() !== "gujarat" && (
+                    itemCount > 5 ? (
+                      <div className="flex items-center gap-2 bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs px-4 py-3 rounded-xl">
+                        <Tag size={13} />
+                        You've unlocked the discounted ₹90 delivery charge for {itemCount} items!
+                      </div>
+                    ) : (
+                      <div className="flex items-center gap-2 bg-brand-50 border border-brand-200 text-brand-700 text-xs px-4 py-3 rounded-xl">
+                        <Tag size={13} />
+                        Add {6 - itemCount} more {6 - itemCount === 1 ? "product" : "products"} to reduce your delivery charge from ₹110 to ₹90!
+                      </div>
+                    )
+                  )}
+
                   <div className="mt-2 flex items-center gap-2 bg-amber-50 border border-amber-200 text-amber-700 text-xs px-4 py-3 rounded-xl">
                     <Lock size={13} />
                     You'll enter your payment details securely via Razorpay.
@@ -347,7 +369,9 @@ export default function Checkout() {
                 )}
                 <div className="flex justify-between text-sm text-gray-600">
                   <span>Shipping</span>
-                  <span className={shippingFree ? "text-emerald-600 font-medium" : "text-gray-800"}>{shippingFree ? "Free" : formatPrice(49)}</span>
+                  <span className="text-gray-800">
+                    {shippingCost === null ? "Enter address" : formatPrice(shippingCost)}
+                  </span>
                 </div>
                 <div className="flex justify-between font-heading font-bold text-gray-900 pt-2 border-t border-brand-50">
                   <span>Total</span>
